@@ -2,7 +2,7 @@ const FormState=({showData})=>{
 
     return (<>
     {
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+        <section className="grid mx-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         {
             showData.map((c,i)=>{
             const entries=Object.entries(c);

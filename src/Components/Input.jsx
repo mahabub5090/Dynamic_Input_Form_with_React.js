@@ -24,11 +24,13 @@ function Input({updateAllData,data,index,deleteField}) {
 
   return (
     <>
-      <section className="flex bg-gray-700 mx-10 my-3 rounded-2xl">
-        <h1 className="my-auto ms-5 text-white text-2xl ">{index+1}</h1>
-        <div className="flex justify-between p-3 gap-x-1.5">
-          <input  onChange={(e)=>setValues(index,name,e.target.value)} type="text" id="" className="bg-black text-white w-xs text-2xl rounded-2xl p-3" placeholder={name}/>
-          <select onChange={(e)=>setValues(index,"#option#",e.target.value)}className="bg-black text-white w-xs text-2xl rounded-2xl p-3">
+      <section className="flex bg-gray-700 rounded-2xl m-5">
+        <h1 className="p-3 content-center text-white text-2xl">{index+1}</h1>
+        <div className="grid max-w-screen grid-cols-3 md:grid-cols-[1fr_1fr_0.3fr] p-3 gap-1.5 ">
+          
+        <input className="bg-black text-white text-2xl rounded-2xl p-3" onChange={(e)=>setValues(index,name,e.target.value)} type="text" id="" placeholder={name}/>
+          
+        <select className="bg-black text-white text-2xl rounded-2xl p-3" onChange={(e)=>setValues(index,"#option#",e.target.value)}>
             <option value="" disabled>Select a option please</option>
             {
               options.map((c,i)=>{
@@ -38,6 +40,7 @@ function Input({updateAllData,data,index,deleteField}) {
               })
             }
           </select>
+          
           <button onClick={()=>deleteField(index)} className="bg-red-700 text-white text-2xl rounded-2xl p-3">Delete</button>
         </div>
       </section>

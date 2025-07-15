@@ -1,8 +1,8 @@
 const TableState=({showData})=>{
 
     return (
-        <div className="mx-10 my-3 border-green-500 border-2">
-            <table className="m-auto w-full">
+        <div className="mx-10 my-3 border-green-500 border-2 overflow-x-auto">
+            <table className="m-auto w-full  border-collapse">
                 <thead className="m-auto"> 
                      <tr className="text-white text-lg font-light">
                         <th className="p-3 rounded-2xl border-green-400 border-2">Serial No.</th>

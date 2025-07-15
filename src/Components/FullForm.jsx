@@ -1,21 +1,49 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AskingData from "./AskingData";
 import Input from "./Input";
 import FormState from "./FormState";
 import TableState from "./TableState";
 
 function FullForm() {
-  const [inputOption,setInputOption]=useState([{name:"Name",options:"Male,Fimale,Not interested to share"}]);
-  const [render,setRender]=useState(0);
-  const [allData,setAllData]=useState([{}]);
+  const [inputOption,setInputOption]=useState([]);
+  const [render,setRender]=useState();
+  const [allData,setAllData]=useState([]);
   const [showData,setShowData]=useState([{}]);
 
+  useEffect(()=>{
+    const savedInputOption=JSON.parse(localStorage.getItem("inputOption"));
+    const savedAllData=JSON.parse(localStorage.getItem("allData"));
+    const isRender=JSON.parse(localStorage.getItem("render"));
+    const savedShowData=JSON.parse(localStorage.getItem("showData"));
+
+    if (savedInputOption)setInputOption(savedInputOption);
+    else setInputOption([{name:"Name",options:"Male,Female,Not interested to share" }]);
+
+    if(savedAllData)setAllData(savedAllData);
+    else setAllData([{}]);
+
+    if(isRender)setRender(1);
+    else setRender(0);
+
+    if(savedShowData)setShowData(savedAllData)
+    else setShowData([{}]);
+
+  },[]);
+
   
+  // CREATE
+
   const addInputField=(data)=>{
     setInputOption([...inputOption,data]);
+    localStorage.setItem("inputOption",JSON.stringify(inputOption));
   }
 
+  // UPDATE
+
   const updateAllData=(index,name,value)=>{
+    localStorage.removeItem("inputOption");
+    localStorage.removeItem("allData");
+    
     if(name=="#option#"){
         if(index>=allData.length)setAllData([...allData,{name:"",options:value}]);
         else allData[index].options=value;        
@@ -24,24 +52,40 @@ function FullForm() {
         if(index>=allData.length)setAllData([...allData,{name:value,options:""}]);
         else allData[index].name=value;
    }      
+
+    localStorage.setItem("inputOption",JSON.stringify(inputOption));
+    localStorage.setItem("allData",JSON.stringify(allData));
+
   }
 
+  // DELETE 
+
   const deleteField=(index)=>{
-    const options=[...inputOption];
-    const data=[...allData];
-    if(options.length==1){
+    if(inputOption.length==1){
       alert("You can't delete filed.\nCause total filed count is only 1.");
       return;
     };
-    options.splice(index,1);
-    data.splice(index,1);
+    
+    const options=inputOption.filter((_,id)=>id!=index);
+    const data=allData.filter((_,id)=>id!=index);
+    
+    localStorage.removeItem("inputOption");
+    localStorage.removeItem("allData");
     setInputOption(options);
     setAllData(data);
-    ()=>show();
+    localStorage.setItem("inputOption",JSON.stringify(options));
+    localStorage.setItem("allData",JSON.stringify(data));
+
+    localStorage.removeItem("showData");
+    setShowData([...data]);
+    localStorage.setItem("showData",JSON.stringify(showData));
   }
+
+  // READ
 
   const show=()=>{
     setShowData([...allData]);
+    localStorage.setItem("showData",JSON.stringify(showData));
   }
   
   return (
@@ -74,9 +118,9 @@ function FullForm() {
         {/* Input Field End */}
 
         <hr className="bg-green-700 w-full h-1"/>
-
+ 
         {/* Form State Start */}
-        <div className="min-h-20 mb-5">
+        <div className="min-h-20 mb-5 ">
           <p className="flex justify-center my-3 text-white text-3xl font-bold">Form State:</p>
           <FormState showData={showData} key={1}></FormState>
           {
@@ -97,6 +141,7 @@ function FullForm() {
           }  
         </div>
         {/* From Table End */}
+
       </section>
     </>
   )
