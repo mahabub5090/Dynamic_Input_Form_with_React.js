@@ -97,9 +97,9 @@ function FullForm() {
   }
   
   return (
-    <>
+    <main className="my-5 mx-10  md:my-10 md:mx-20 lg:my-15 lg:mx-30 content-center grid justify-center p-3 bg-black border-8 rounded-3xl border-green-700">
       <header className="text-white text-5xl text-center p-7 font-extrabold">Dynamic Input Form:</header>
-      <hr className="bg-green-700  w-full h-1" />
+      <hr className="bg-green-700 h-1 w-full mb-5" />
       <section className="">
 
         {/* Input Filed Start */}
@@ -111,7 +111,7 @@ function FullForm() {
                   )
                })
               }
-
+              {/*  */}
               {render?<AskingData setRender={setRender} addInputField={addInputField}></AskingData>:<p></p>}
               {/* button start  */}
               <div className="flex justify-between p-3 mx-10">
@@ -125,7 +125,7 @@ function FullForm() {
 
         {/* Input Field End */}
 
-        <hr className="bg-green-700 w-full h-1"/>
+        <hr className="bg-green-700 h-1  w-full"/>
  
         {/* Form State Start */}
         <div className="min-h-20 mb-5 ">
@@ -138,7 +138,7 @@ function FullForm() {
         </div>
         {/* Form State End */}
         
-        <hr className="bg-green-700 w-full h-1"/>
+        <hr className="bg-green-700 h-1 w-full "/>
 
         {/* Form Table Start */}
         <div className="min-h-20 mb-5">
@@ -151,7 +151,7 @@ function FullForm() {
         {/* From Table End */}
 
       </section>
-    </>
+    </main>
   )
 }
 
