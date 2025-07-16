@@ -1,4 +1,4 @@
-  import { useState } from "react";
+  import { useEffect, useRef, useState } from "react";
   import { toast, ToastContainer } from "react-toastify";
 
   function AskingData({setRender,addInputField}){
@@ -16,6 +16,11 @@
         setTimeout(()=>{setRender(0)},3000);
         setClicked(1);
       }
+
+      const refer=useRef(null)
+      useEffect(()=>{
+
+      },[]);
       
       return ( 
       <section className="bg-gray-700 mx-10 my-3 rounded-2xl">
