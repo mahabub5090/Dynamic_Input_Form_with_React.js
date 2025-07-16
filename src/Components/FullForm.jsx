@@ -34,8 +34,13 @@ function FullForm() {
   // CREATE
 
   const addInputField=(data)=>{
+    localStorage.removeItem("inputOption")
+    localStorage.removeItem("allData");
+
     setInputOption([...inputOption,data]);
+    setAllData([...allData,{[data.name]:"",Option:""}]);
     localStorage.setItem("inputOption",JSON.stringify(inputOption));
+    localStorage.setItem("allData",JSON.stringify(allData));
   }
 
   // UPDATE
@@ -45,12 +50,11 @@ function FullForm() {
     localStorage.removeItem("allData");
     
     if(name=="#option#"){
-        if(index>=allData.length)setAllData([...allData,{name:"",options:value}]);
-        else allData[index].options=value;        
+        allData[index].options=value;        
     }
     else{
-        if(index>=allData.length)setAllData([...allData,{name:value,options:""}]);
-        else allData[index].name=value;
+        const {Option}=allData[index];
+        allData[index]={[name]:value,Option};
    }      
 
     localStorage.setItem("inputOption",JSON.stringify(inputOption));
@@ -104,7 +108,7 @@ function FullForm() {
                })
               }
 
-              {render?<AskingData setRender={setRender} inputOptions={addInputField}></AskingData>:<p></p>}
+              {render?<AskingData setRender={setRender} addInputField={addInputField}></AskingData>:<p></p>}
               {/* button start  */}
               <div className="flex justify-between p-3 mx-10">
                 <button onClick={()=>{addInputField;setRender(1);

@@ -1,7 +1,7 @@
   import { useState } from "react";
   import { toast, ToastContainer } from "react-toastify";
 
-  function AskingData({setRender,inputOptions}){
+  function AskingData({setRender,addInputField}){
       const [name,setName]=useState('');
       const [options,setoptions]=useState('');
       const [clicked,setClicked]=useState(0);
@@ -10,8 +10,8 @@
         if(name.trim().length==0 || options.trim().length==0){
           alert("Please give the field name and it's options. Then try again.")
           return;
-        }
-        inputOptions({name,options});
+        }        
+        addInputField({name,options});
         toast.success("Your input field was added successfully! ☺️");
         setTimeout(()=>{setRender(0)},3000);
         setClicked(1);

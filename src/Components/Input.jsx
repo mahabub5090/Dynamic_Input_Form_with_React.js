@@ -11,8 +11,8 @@ function Input({updateAllData,data,index,deleteField}) {
   }
   if(string.length>0)options.push(string);
 
-  const setValues=(index,name,value)=>{      
-    updateAllData(index,name,value);
+  const setValues=(index,fieldName,value)=>{      
+    updateAllData(index,fieldName,value);
   }
 
   useEffect(() => {
