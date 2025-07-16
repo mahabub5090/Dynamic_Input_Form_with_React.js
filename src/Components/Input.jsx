@@ -43,7 +43,7 @@ function Input({updateAllData,data,index,deleteField,shouldFocus}) {
     <>
       <section className="flex my-2 bg-gray-700 rounded-2xl">
         <h1 className="p-3 content-center pr-0 text-white text-3xl">{index+1}</h1>
-        <label for="inputBox" className="text-white bg-red-800 rounded-4xl text-xs absolute px-3 ms-10 font-semibold">{shouldFocus?"You must fill this field and choose a option for submitting the form * ":""}</label>
+        <label for="inputBox" className="text-white bg-red-800 rounded-4xl text-[10px] absolute px-3 ms-5 font-semibold">{shouldFocus?"You must fill this field and choose a option for submitting the form * ":""}</label>
         <div id="inputBox" className="grid grid-cols-3 p-3 gap-2">
         <input  ref={inputRef} className="bg-black text-white text-2xl capitalize rounded-2xl p-3" onChange={(e)=>setValues(index,name,e.target.value)} type="text" id="" placeholder={name}/>
 
