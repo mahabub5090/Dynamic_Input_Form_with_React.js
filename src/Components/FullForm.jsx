@@ -90,15 +90,11 @@ function FullForm() {
   // READ
 
   const show=(dlt)=>{
-    if(validityCheck(allData)==0 && dlt==0){
-      toast.error("Please fill all Input field first and then click on submit.");
+    if(validityCheck(allData)==0){
+      if(dlt==0)toast.error("Please fill all Input field first and then click on submit.");
       return;
     }
-    if(showData==allData){
-      setShowData([]);
-      setShowData([...allData]);
-      return;
-    }
+    
     localStorage.removeItem("showData");
     setShowData([...allData]);
     localStorage.setItem("showData",JSON.stringify(showData));
