@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-function Input({updateAllData,data,index,deleteField}) {
+function Input({updateAllData,data,index,deleteField,shouldFocus}) {
   const name=data.name;
   const optionString=data.options;
   const options=[];
@@ -35,8 +35,13 @@ function Input({updateAllData,data,index,deleteField}) {
       }
     }    
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
+  },[])
 
+  useEffect(()=>{
+
+    if(shouldFocus && inputRef.current)inputRef.current.focus();
+
+  },[shouldFocus])
  
   return (
     <>
