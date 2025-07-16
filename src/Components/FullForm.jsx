@@ -9,8 +9,9 @@ function FullForm() {
   const [inputOption,setInputOption]=useState([]);
   const [render,setRender]=useState();
   const [allData,setAllData]=useState([]);
-  const [showData,setShowData]=useState([{}]);
+  const [showData,setShowData]=useState([]);
   
+  const [empty,setEmpty]=useState(1);
   const [emptyFieldIndexed,setEmptyFieldIndexes]=useState([]);
 
   useEffect(()=>{
@@ -159,7 +160,7 @@ function FullForm() {
           <p className="flex justify-center my-3 text-white text-3xl font-bold">Form State:</p>
           <FormState></FormState>
           {
-            Object.keys(showData[0]).length==0?<p className="flex justify-center text-white text-xl">From State is empty 😣.<br></br> Please add some data.</p>:<p></p>
+            empty?<p className="flex justify-center text-white text-xl">From State is empty 😣.<br></br> Please add some data.</p>:<p></p>
             
           }          
         </div>
@@ -172,7 +173,7 @@ function FullForm() {
           <p className="flex justify-center my-3 text-white text-3xl font-bold">Form Data Table:</p>
           <TableState></TableState>
           {
-            Object.keys(showData[0]).length==0?<p className="flex justify-center text-white text-xl">From Table is empty 😣.<br></br> Please add some data.</p>:<p></p>
+            empty?<p className="flex justify-center text-white text-xl">From Table is empty 😣.<br></br> Please add some data.</p>:<p></p>
           }  
         </div>
         {/* From Table End */}
