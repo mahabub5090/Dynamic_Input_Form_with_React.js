@@ -38,7 +38,7 @@ function FullForm() {
     localStorage.removeItem("allData");
 
     setInputOption([...inputOption,data]);
-    setAllData([...allData,{[data.name]:"",Option:""}]);
+    setAllData([...allData,{[data.name]:"",options:""}]);
     localStorage.setItem("inputOption",JSON.stringify(inputOption));
     localStorage.setItem("allData",JSON.stringify(allData));
   }
@@ -50,11 +50,11 @@ function FullForm() {
     localStorage.removeItem("allData");
     
     if(name=="#option#"){
-        allData[index].options=value;        
+        if(value)allData[index].options=value;        
     }
     else{
-        const {Option}=allData[index];
-        allData[index]={[name]:value,Option};
+        const {options}=allData[index];
+        allData[index]={[name]:value,options};
    }      
 
     localStorage.setItem("inputOption",JSON.stringify(inputOption));
@@ -126,7 +126,7 @@ function FullForm() {
         {/* Form State Start */}
         <div className="min-h-20 mb-5 ">
           <p className="flex justify-center my-3 text-white text-3xl font-bold">Form State:</p>
-          <FormState showData={showData} key={1}></FormState>
+          <FormState></FormState>
           {
             Object.keys(showData[0]).length==0?<p className="flex justify-center text-white text-xl">From State is empty 😣.<br></br> Please add some data.</p>:<p></p>
             
@@ -139,7 +139,7 @@ function FullForm() {
         {/* Form Table Start */}
         <div className="min-h-20 mb-5">
           <p className="flex justify-center my-3 text-white text-3xl font-bold">Form Data Table:</p>
-          <TableState showData={showData} key={1}></TableState>
+          <TableState></TableState>
           {
             Object.keys(showData[0]).length==0?<p className="flex justify-center text-white text-xl">From Table is empty 😣.<br></br> Please add some data.</p>:<p></p>
           }  

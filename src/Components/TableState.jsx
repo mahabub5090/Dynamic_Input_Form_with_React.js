@@ -1,5 +1,5 @@
-const TableState=({showData})=>{
-
+const TableState=()=>{
+    const showData=JSON.parse(localStorage.getItem("showData"));
     return (
         <div className="mx-10 my-3 border-green-500 border-2 overflow-x-auto">
             <table className="m-auto w-full  border-collapse">
@@ -13,13 +13,13 @@ const TableState=({showData})=>{
                 <tbody className="m-auto ">
                 {
                     showData.map((c,i)=>{
-                        const entries=Object.entries(c);
-                        if(entries.length==0)return;
+                        const keys=Object.keys(c);
+                        if(keys.length==0)return;
                         return (
                             <tr key={i} className=" even:bg-gray-700 odd:bg-gray-800 text-white text-base">
                                 <td className="p-3 text-center border-2">{i+1}</td>
-                                <td className="p-3 text-center border-2">{entries[0][1]}</td>
-                                <td className="p-3 text-center border-2">{c.options}</td>
+                                <td className="p-3 text-center border-2">{c[keys[0]]}</td>
+                                <td className="p-3 text-center border-2">{c[keys[1]]}</td>
                             </tr>
                         )
                     })
