@@ -34,21 +34,18 @@ function Input({updateAllData,data,index,deleteField,shouldFocus}) {
         }
       }
     }    
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
-
-  useEffect(()=>{
-
     if(shouldFocus && inputRef.current)inputRef.current.focus();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[shouldFocus])
- 
+
   return (
     <>
-      <section className="flex bg-gray-700 rounded-2xl">
+      <section className="flex my-2 bg-gray-700 rounded-2xl">
         <h1 className="p-3 content-center pr-0 text-white text-3xl">{index+1}</h1>
-        <div className="grid grid-cols-3  p-3 gap-2">
-        <input ref={inputRef} className="bg-black text-white text-2xl capitalize rounded-2xl p-3" onChange={(e)=>setValues(index,name,e.target.value)} type="text" id="" placeholder={name}/>
+        <label for="inputBox" className="text-white bg-red-800 rounded-4xl text-xs absolute px-3 ms-10 font-semibold">{shouldFocus?"You must fill this field and choose a option for submitting the form * ":""}</label>
+        <div id="inputBox" className="grid grid-cols-3 p-3 gap-2">
+        <input  ref={inputRef} className="bg-black text-white text-2xl capitalize rounded-2xl p-3" onChange={(e)=>setValues(index,name,e.target.value)} type="text" id="" placeholder={name}/>
 
         <select className="bg-black text-white text-2xl rounded-2xl p-3" onChange={(e)=>setValues(index,"#option#",e.target.value)}>
             <option value="" disabled>Select a option please</option>
