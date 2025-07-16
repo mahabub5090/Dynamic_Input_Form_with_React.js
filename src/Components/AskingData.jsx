@@ -1,4 +1,4 @@
-  import { useEffect, useRef, useState } from "react";
+  import {  useState } from "react";
   import { toast, ToastContainer } from "react-toastify";
 
   function AskingData({setRender,addInputField}){
@@ -16,17 +16,12 @@
         setTimeout(()=>{setRender(0)},3000);
         setClicked(1);
       }
-
-      const refer=useRef(null)
-      useEffect(()=>{
-
-      },[]);
       
       return ( 
       <section className="bg-gray-700 mx-10 my-3 rounded-2xl">
             {clicked==0?<div className="grid grid-cols-1 gap-5 p-3 ">
             <input onChange={(e)=>setName(e.target.value)} type="text" name="" id="" className="bg-black text-white  text-2xl rounded-2xl p-3" placeholder="New Input Field Name"/>
-            <input onChange={(e)=>setoptions(e.target.value)} type="text" name="" id="" className="bg-black text-white text-2xl rounded-2xl p-3 " placeholder="Options [Seperate Using ,(Coma)]"/>
+            <input  onChange={(e)=>setoptions(e.target.value)} type="text" name="" id="" className="bg-black text-white text-2xl rounded-2xl p-3 " placeholder="Options [Seperate Using ,(Coma)]"/>
             <div className="grid grid-cols-2 gap-2">
               <button onClick={()=>setRender(0)} className="bg-gray-500 text-black text-2xl rounded-2xl p-3">Cancel</button>
              <button onClick={handleAddClick} className="bg-white text-black text-2xl rounded-2xl p-3">+ Add</button>

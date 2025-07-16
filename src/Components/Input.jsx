@@ -22,7 +22,7 @@ function Input({updateAllData,data,index,deleteField}) {
     if (options.length==1) {
       setValues(index, "#option#", options[0]);
     } 
-    if(allData!=null && allData[index].length!=0){
+    if(allData!=null && allData[index] &&  allData[index].length!=0){
        const keys=Object.keys(allData[index]);  
        if(keys.length>0){
         const prevValue=allData[index][ keys[0]];

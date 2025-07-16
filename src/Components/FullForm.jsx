@@ -80,14 +80,18 @@ function FullForm() {
     localStorage.setItem("inputOption",JSON.stringify(options));
     localStorage.setItem("allData",JSON.stringify(data));
 
-    localStorage.removeItem("showData");
-    setShowData([...data]);
-    localStorage.setItem("showData",JSON.stringify(showData));
+    show();    
   }
 
   // READ
 
   const show=()=>{
+    if(showData==allData){
+      setShowData([]);
+      setShowData([...allData]);
+      return;
+    }
+    localStorage.removeItem("showData");
     setShowData([...allData]);
     localStorage.setItem("showData",JSON.stringify(showData));
   }
