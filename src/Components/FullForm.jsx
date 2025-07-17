@@ -114,6 +114,7 @@ function FullForm() {
     if(invalidIndexes.length!=0){
       setEmptyFieldIndexes([...invalidIndexes]);   
      toast.error("Please fill all Input field first and then click on submit.");
+     toast.warning("Please fill the filed box and the @ select option.");
       return;
     } 
 

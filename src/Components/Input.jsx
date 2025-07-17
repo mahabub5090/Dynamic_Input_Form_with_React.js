@@ -48,7 +48,6 @@ function Input({updateAllData,data,index,deleteField,shouldFocus}) {
       }
     }    
     if(shouldFocus && inputRef.current)inputRef.current.focus();
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[shouldFocus])
 
