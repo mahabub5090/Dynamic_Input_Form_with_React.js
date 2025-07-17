@@ -147,7 +147,7 @@ function FullForm() {
   // Logic end AND Render Start;;
 
   return (
-    <main className="my-5 mx-10  md:my-10 md:mx-20 lg:my-15 lg:mx-30 content-center grid justify-center p-3 bg-black border-8 rounded-3xl border-green-700">
+    <main className="my-5 md:my-10 md:mx-20 lg:my-15 lg:mx-30 content-center grid justify-center p-3 bg-black border-8 rounded-3xl border-green-700">
       <header className="text-white text-5xl text-center p-7 font-extrabold">Dynamic Input Form:</header>
       <hr className="bg-green-700 h-1 w-full mb-5" />
       <section className="">
