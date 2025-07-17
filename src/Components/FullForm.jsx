@@ -10,26 +10,27 @@ function FullForm() {
   const [render,setRender]=useState();
   const [allData,setAllData]=useState([]);
   const [showData,setShowData]=useState([]);
+
+  const submit=localStorage.getItem("submit");
+  const firstTime=submit==null?1:0;
   
-  const [empty,setEmpty]=useState(1);
   const [emptyFieldIndexed,setEmptyFieldIndexes]=useState([]);
 
   useEffect(()=>{
-    const savedInputOption=JSON.parse(localStorage.getItem("inputOption"));
-    const savedAllData=JSON.parse(localStorage.getItem("allData"));
-    const isRender=JSON.parse(localStorage.getItem("render"));
-    const savedShowData=JSON.parse(localStorage.getItem("showData"));
+    const savedInputOption=JSON.parse(localStorage.getItem("inputOption"))||[];
+    const savedAllData=JSON.parse(localStorage.getItem("allData"))||[];
+    const isRender=JSON.parse(localStorage.getItem("render"))||0;
+    const savedShowData=JSON.parse(localStorage.getItem("showData"))||[];
 
-    if (savedInputOption)setInputOption(savedInputOption);
+    if (savedInputOption.length)setInputOption(savedInputOption);
     else setInputOption([{name:"Name",options:"Male,Female,Not interested to share" }]);
 
-    if(savedAllData)setAllData(savedAllData);
+    if(savedAllData.length)setAllData(savedAllData);
     else setAllData([{}]);
 
-    if(isRender)setRender(1);
-    else setRender(0);
+    setRender(isRender);
 
-    if(savedShowData)setShowData(savedAllData)
+    if(savedShowData.length)setShowData(savedAllData)
     else setShowData([{}]);
 
   },[]);
@@ -40,11 +41,19 @@ function FullForm() {
   const addInputField=(data)=>{
     localStorage.removeItem("inputOption")
     localStorage.removeItem("allData");
+    localStorage.removeItem("showData");
 
-    setInputOption([...inputOption,data]);
-    setAllData([...allData,{[data.name]:"",options:""}]);
-    localStorage.setItem("inputOption",JSON.stringify(inputOption));
-    localStorage.setItem("allData",JSON.stringify(allData));
+    const newInputOption=[...inputOption,data];
+    const newAllData=[...allData,{[data.name]:"",options:""}];
+    const newShowData=[...showData,{}];
+
+    setInputOption(newInputOption);
+    setAllData(newAllData);
+    setShowData(newShowData);
+    localStorage.setItem("inputOption",JSON.stringify(newInputOption));
+    localStorage.setItem("allData",JSON.stringify(newAllData));
+    localStorage.setItem("showData",JSON.stringify(newShowData));
+
   }
 
   // UPDATE
@@ -60,14 +69,16 @@ function FullForm() {
         const {options}=allData[index];
         allData[index]={[name]:value,options};
    }      
-
+   
+    setInputOption(inputOption);
+    setAllData(allData);
     localStorage.setItem("inputOption",JSON.stringify(inputOption));
     localStorage.setItem("allData",JSON.stringify(allData));
   }
 
   // DELETE 
 
-  const deleteField=(name)=>{
+  const deleteField=(index)=>{
     if(inputOption.length==1){
       alert("You can't delete filed.\nCause total filed count is only 1.");
       return;
@@ -76,11 +87,11 @@ function FullForm() {
     toast.success("Succesfully delete a filed.");
     console.log(name,'\n');
 
-    const options=inputOption.filter((data)=>(data.name!==name));
-    const data=allData.filter((item)=>!(name in item));
-    const showState=showData.filter((item)=>!(name in item))
+    const options=inputOption.filter((_,id)=>id!=index);
+    const data=allData.filter((_,id)=>id!=index);
+    const showState=showData.filter((_,id)=>id!=index);
 
-    console.log(options,data,showState);
+    // console.log(options,data,showState);
     
     
     localStorage.removeItem("inputOption");
@@ -89,26 +100,29 @@ function FullForm() {
     setInputOption(options);
     setAllData(data);
     setShowData(showState);
+    setEmptyFieldIndexes([]);
     localStorage.setItem("inputOption",JSON.stringify(options));
     localStorage.setItem("allData",JSON.stringify(data));
-    localStorage.setItem("showData",JSON.stringify(showData));
-    
-    show(1);    
+    localStorage.setItem("showData",JSON.stringify(showState));
+  
   }
 
   // READ
 
-  const show=(dlt)=>{
+  const show=()=>{
     const invalidIndexes=validityCheck(allData);
     if(invalidIndexes.length!=0){
       setEmptyFieldIndexes([...invalidIndexes]);   
-      if(dlt==0)toast.error("Please fill all Input field first and then click on submit.");
+     toast.error("Please fill all Input field first and then click on submit.");
       return;
     } 
+
+    setEmptyFieldIndexes([]);
     localStorage.removeItem("showData");
     setShowData([...allData]);
-    localStorage.setItem("showData",JSON.stringify(showData));
-    setEmpty(0);
+    localStorage.setItem("showData",JSON.stringify([...allData]));
+
+    localStorage.setItem("submit",0);
   };
   
   // validation
@@ -155,7 +169,7 @@ function FullForm() {
                 <button onClick={()=>{addInputField;setRender(1);
                   if(render)alert("Please add a field first.\nOr if you has already added filed then please wait almost 3 seconds.");
                 }} className="bg-white text-black text-2xl rounded-2xl p-3">+ Add Field</button>
-                <button onClick={()=>show(0)} className="bg-green-400 text-black text-2xl rounded-2xl p-3" disabled={render}>Submit</button>
+                <button onClick={()=>show()} className="bg-green-400 text-black text-2xl rounded-2xl p-3" disabled={render}>Submit</button>
               </div>
               {/* button end */}
         </div>
@@ -169,7 +183,7 @@ function FullForm() {
           <p className="flex justify-center my-3 text-white text-3xl font-bold">Form State:</p>
           <FormState showData={showData}></FormState>
           {
-            empty?<p className="flex justify-center text-white text-xl">From State is empty 😣.<br></br> Please add some data.</p>:<p></p>
+            firstTime?<p className="flex justify-center text-white text-xl">From State is empty 😣.<br></br> Please add some data.</p>:<p></p>
             
           }          
         </div>
@@ -182,7 +196,7 @@ function FullForm() {
           <p className="flex justify-center my-3 text-white text-3xl font-bold">Form Data Table:</p>
           <TableState showData={showData}></TableState>
           {
-            empty?<p className="flex justify-center text-white text-xl">From Table is empty 😣.<br></br> Please add some data.</p>:<p></p>
+            firstTime?<p className="flex justify-center text-white text-xl">From Table is empty 😣.<br></br> Please add some data.</p>:<p></p>
           }  
         </div>
         {/* From Table End */}

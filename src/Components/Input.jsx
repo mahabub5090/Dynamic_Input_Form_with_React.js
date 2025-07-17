@@ -17,6 +17,7 @@ function Input({updateAllData,data,index,deleteField,shouldFocus}) {
   }
   const allData=JSON.parse(localStorage.getItem("allData"));
   const inputRef=useRef(null);
+  const inputRef2=useRef(null);
 
   useEffect(() => {
     if (options.length==1) {
@@ -34,6 +35,18 @@ function Input({updateAllData,data,index,deleteField,shouldFocus}) {
         }
       }
     }    
+    if(allData!=null && allData[index] &&  allData[index].length!=0){
+       const keys=Object.keys(allData[index]);  
+       if(keys.length>1){
+        const prevValue=allData[index][keys[1]];
+        if(keys[1] && prevValue){
+          if(inputRef.current){
+            // console.log(inputRef.current);
+            inputRef2.current.value=prevValue;
+          }
+        }
+      }
+    }    
     if(shouldFocus && inputRef.current)inputRef.current.focus();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -47,7 +60,7 @@ function Input({updateAllData,data,index,deleteField,shouldFocus}) {
         <div id="inputBox" className="grid grid-cols-3 p-3 gap-2">
         <input  ref={inputRef} className="bg-black text-white text-2xl capitalize rounded-2xl p-3" onChange={(e)=>{e.preventDefault();setValues(index,name,e.target.value)}} type="text" id="" placeholder={name}/>
 
-        <select className="bg-black text-white text-2xl rounded-2xl p-3" onChange={(e)=>{e.preventDefault();setValues(index,"#option#",e.target.value)}}>
+        <select ref={inputRef2} className="bg-black text-white text-2xl rounded-2xl p-3" onChange={(e)=>{e.preventDefault();setValues(index,"#option#",e.target.value)}}>
             <option value="" disabled>Select a option please</option>
             {
               options.map((c,i)=>{
@@ -58,7 +71,7 @@ function Input({updateAllData,data,index,deleteField,shouldFocus}) {
             }
           </select>
           
-          <button onClick={()=>deleteField(value)} className="bg-red-700 text-white text-2xl rounded-2xl p-3">Delete</button>
+          <button onClick={()=>deleteField(index)} className="bg-red-700 text-white text-2xl rounded-2xl p-3">Delete</button>
         </div>
       </section>
     </>

@@ -8,7 +8,7 @@
         const name=localStorage.getItem("fieldName");
         const options=localStorage.getItem("fieldOption");
 
-        if(name.trim().length==0 || options.trim().length==0){
+        if(name ==null|| name==undefined || options==null || options==undefined || name.trim().length==0 || options.trim().length==0){
           alert("Please give the field name and it's options. Then try again.")
           return;
         }        
