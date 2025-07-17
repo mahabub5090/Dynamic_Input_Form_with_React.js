@@ -1,6 +1,5 @@
-const TableState=()=>{
-    const showData=JSON.parse(localStorage.getItem("showData"));
-    if(showData==null)return;
+const TableState=({showData})=>{
+    
     return (
         <div className="mx-10 my-3 border-green-500 border-2 overflow-x-auto">
             <table className="m-auto w-full  border-collapse">

@@ -63,42 +63,52 @@ function FullForm() {
 
     localStorage.setItem("inputOption",JSON.stringify(inputOption));
     localStorage.setItem("allData",JSON.stringify(allData));
-
   }
 
   // DELETE 
 
-  const deleteField=(index)=>{
+  const deleteField=(name)=>{
     if(inputOption.length==1){
       alert("You can't delete filed.\nCause total filed count is only 1.");
       return;
     };
+     
     toast.success("Succesfully delete a filed.");
+    console.log(name,'\n');
+
+    const options=inputOption.filter((data)=>(data.name!==name));
+    const data=allData.filter((item)=>!(name in item));
+    const showState=showData.filter((item)=>!(name in item))
+
+    console.log(options,data,showState);
     
-    const options=inputOption.filter((_,id)=>id!=index);
-    const data=allData.filter((_,id)=>id!=index);
     
     localStorage.removeItem("inputOption");
     localStorage.removeItem("allData");
+    localStorage.removeItem("showData");
     setInputOption(options);
     setAllData(data);
+    setShowData(showState);
     localStorage.setItem("inputOption",JSON.stringify(options));
     localStorage.setItem("allData",JSON.stringify(data));
-
+    localStorage.setItem("showData",JSON.stringify(showData));
+    
     show(1);    
   }
 
   // READ
 
   const show=(dlt)=>{
-    if(validityCheck(allData)==0){
+    const invalidIndexes=validityCheck(allData);
+    if(invalidIndexes.length!=0){
+      setEmptyFieldIndexes([...invalidIndexes]);   
       if(dlt==0)toast.error("Please fill all Input field first and then click on submit.");
       return;
-    }
-    
+    } 
     localStorage.removeItem("showData");
     setShowData([...allData]);
     localStorage.setItem("showData",JSON.stringify(showData));
+    setEmpty(0);
   };
   
   // validation
@@ -116,8 +126,7 @@ function FullForm() {
 
         cnt++; 
     }
-    setEmptyFieldIndexes([...invalidIndexes]);   
-    return invalidIndexes.length==0;
+    return invalidIndexes;
   }
 
   // Logic end AND Render Start;;
@@ -146,7 +155,7 @@ function FullForm() {
                 <button onClick={()=>{addInputField;setRender(1);
                   if(render)alert("Please add a field first.\nOr if you has already added filed then please wait almost 3 seconds.");
                 }} className="bg-white text-black text-2xl rounded-2xl p-3">+ Add Field</button>
-                <button onClick={()=>show(0)} className="bg-green-400 text-black text-2xl rounded-2xl p-3">Submit</button>
+                <button onClick={()=>show(0)} className="bg-green-400 text-black text-2xl rounded-2xl p-3" disabled={render}>Submit</button>
               </div>
               {/* button end */}
         </div>
@@ -158,7 +167,7 @@ function FullForm() {
         {/* Form State Start */}
         <div className="min-h-20 mb-5 ">
           <p className="flex justify-center my-3 text-white text-3xl font-bold">Form State:</p>
-          <FormState></FormState>
+          <FormState showData={showData}></FormState>
           {
             empty?<p className="flex justify-center text-white text-xl">From State is empty 😣.<br></br> Please add some data.</p>:<p></p>
             
@@ -171,7 +180,7 @@ function FullForm() {
         {/* Form Table Start */}
         <div className="min-h-20 mb-5">
           <p className="flex justify-center my-3 text-white text-3xl font-bold">Form Data Table:</p>
-          <TableState></TableState>
+          <TableState showData={showData}></TableState>
           {
             empty?<p className="flex justify-center text-white text-xl">From Table is empty 😣.<br></br> Please add some data.</p>:<p></p>
           }  

@@ -16,7 +16,7 @@
         localStorage.removeItem("fieldName");
         localStorage.removeItem("fieldOption");
         toast.success("Your input field was added successfully! ☺️");
-        setTimeout(()=>{setRender(0)},3000);
+        setTimeout(()=>{setRender(0)},2000);
         setClicked(1);
       }
       
@@ -27,6 +27,11 @@
       const updateFieldOption=(option)=>{
         localStorage.removeItem("fieldOption");
         localStorage.setItem("fieldOption",option);
+      }
+      const cancel=()=>{
+        setRender(0);
+        localStorage.removeItem("fieldName");
+        localStorage.removeItem("fieldOption");
       }
       
       const refer=useRef();
@@ -47,7 +52,7 @@
             <input  ref={refer} onChange={(e)=>updateFieldName(e.target.value)} type="text" name="" id="" className="bg-black text-white  text-2xl rounded-2xl p-3" placeholder="New Input Field Name"/>
             <input ref={refer2} onChange={(e)=>updateFieldOption(e.target.value)} type="text" name="" id="" className="bg-black text-white text-2xl rounded-2xl p-3 " placeholder="Options [Seperate Using ,(Coma)]"/>
             <div className="grid grid-cols-2 gap-2">
-              <button onClick={()=>setRender(0)} className="bg-gray-500 text-black text-2xl rounded-2xl p-3">Cancel</button>
+              <button onClick={cancel} className="bg-gray-500 text-black text-2xl rounded-2xl p-3">Cancel</button>
              <button onClick={handleAddClick} className="bg-white text-black text-2xl rounded-2xl p-3">+ Add</button>
             </div>
             </div>:<p></p>

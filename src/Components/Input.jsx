@@ -45,9 +45,9 @@ function Input({updateAllData,data,index,deleteField,shouldFocus}) {
         <h1 className="p-3 content-center pr-0 text-white text-3xl">{index+1}</h1>
         <label className="text-white bg-red-800 rounded-4xl text-[10px] absolute px-3 ms-5 font-semibold">{shouldFocus?"You must fill this field and choose a option for submitting the form * ":""}</label>
         <div id="inputBox" className="grid grid-cols-3 p-3 gap-2">
-        <input  ref={inputRef} className="bg-black text-white text-2xl capitalize rounded-2xl p-3" onChange={(e)=>setValues(index,name,e.target.value)} type="text" id="" placeholder={name}/>
+        <input  ref={inputRef} className="bg-black text-white text-2xl capitalize rounded-2xl p-3" onChange={(e)=>{e.preventDefault();setValues(index,name,e.target.value)}} type="text" id="" placeholder={name}/>
 
-        <select className="bg-black text-white text-2xl rounded-2xl p-3" onChange={(e)=>setValues(index,"#option#",e.target.value)}>
+        <select className="bg-black text-white text-2xl rounded-2xl p-3" onChange={(e)=>{e.preventDefault();setValues(index,"#option#",e.target.value)}}>
             <option value="" disabled>Select a option please</option>
             {
               options.map((c,i)=>{
@@ -58,7 +58,7 @@ function Input({updateAllData,data,index,deleteField,shouldFocus}) {
             }
           </select>
           
-          <button onClick={()=>deleteField(index)} className="bg-red-700 text-white text-2xl rounded-2xl p-3">Delete</button>
+          <button onClick={()=>deleteField(value)} className="bg-red-700 text-white text-2xl rounded-2xl p-3">Delete</button>
         </div>
       </section>
     </>
